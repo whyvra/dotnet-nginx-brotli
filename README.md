@@ -2,12 +2,12 @@
 
 [![GitHub Build](https://img.shields.io/github/workflow/status/whyvra/dotnet-nginx-brotli/Build%20Docker%20image?style=flat-square)](https://github.com/whyvra/dotnet-nginx-brotli/actions)
 [![Docker Pulls](https://img.shields.io/docker/pulls/whyvra/dotnet-nginx-brotli?style=flat-square)](https://hub.docker.com/r/whyvra/dotnet-nginx-brotli)
-[![LICENSE](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](https://github.com/whyvra/tunnel/blob/master/LICENSE)
+[![LICENSE](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](https://github.com/whyvra/dotnet-nginx-brotli/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 A Debian based docker image that includes ASP.NET Core 5.0, nginx and the brotli compression module.
 
-This image is indented to host a .NET Web API along with a static frontend like Angular or Blazor.
+This image is intended to host a .NET Web API along with a static frontend like Angular or Blazor.
 
 ## Usage
 
@@ -31,7 +31,7 @@ Two folders have been created under `/srv`, where you can add your .NET DLLs and
 
 Nginx is configured to load hosts configuration from the `/etc/nginx/conf.d` directory so you should place your conf file there. The brotli module will be loaded on startup. Use the `brotli_static` and `brotli_filter` directives.
 
-`gettext` has also been installed in case you may need to perform a config transformation with environment variables (for example to support SSL.)
+`gettext` has also been installed in case you may need to perform a config transformation with environment variables (for example to support SSL).
 
 You can use the following command:
 ```bash
