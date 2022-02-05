@@ -1,11 +1,13 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0.8 as builder
+ARG DOTNET_VERSION
+
+FROM mcr.microsoft.com/dotnet/aspnet:$DOTNET_VERSION as builder
 
 WORKDIR /root/
 
 COPY ./build_ngx_brotli.sh ./
 RUN bash ./build_ngx_brotli.sh
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0.8
+FROM mcr.microsoft.com/dotnet/aspnet:$DOTNET_VERSION
 
 RUN apt-get update \
   && apt-get -y install nginx gettext \

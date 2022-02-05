@@ -1,31 +1,25 @@
 name: Build Docker image
 
-# Triggers the workflow when pushing to master
+# Triggers the workflow when pushing new tags
 on:
   push:
-    branches:
-      - master
+    tags:
+    - '*'
 
 jobs:
   build-code:
     environment: Docker Hub
-    runs-on: ubuntu-18.04
-    env:
-      DOTNET_CLI_TELEMETRY_OPTOUT: true
-      DOTNET_NOLOGO: true
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
-      - name: Install versioning tool
-        run: dotnet tool install --global Whyvra.GitV
-
       - name: Calculate version
         run: |
-          echo "ModuleVersion=$(gitv)" >> $GITHUB_ENV
-          echo "MajorMinVersion=$(gitv | cut -f1,2 -d '.')" >> $GITHUB_ENV
+          echo "ModuleVersion=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          echo "MajorMinVersion=$(echo ${GITHUB_REF##*/} | cut -f1,2 -d '.')" >> $GITHUB_ENV
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -47,6 +41,7 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
+          build-args: DOTNET_VERSION=${{ env.ModuleVersion }}
           tags: |
             whyvra/dotnet-nginx-brotli:latest
             whyvra/dotnet-nginx-brotli:${{ env.ModuleVersion }}
